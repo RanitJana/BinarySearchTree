@@ -8,6 +8,7 @@ struct Node
     Node(int value) : data(value), left(NULL), right(NULL) {}
 };
 
+// insertion
 Node *insertIterative(Node *root, int value)
 {
     Node *newNode = new Node(value);
@@ -48,6 +49,7 @@ Node *insertRec(Node *root, int value)
     return root;
 }
 
+// searching
 Node *searchNodeIterative(Node *root, int value)
 {
     while (root)
@@ -72,7 +74,7 @@ Node *searchNodeRec(Node *root, int value)
         return searchNodeRec(root->right, value);
     return searchNodeRec(root->left, value);
 }
-
+// deletion
 Node *singleChild(Node *root, Node *temp, Node *prev)
 {
     Node *child = temp->left ? temp->left : temp->right;
@@ -165,6 +167,7 @@ Node *eraseNodeRec(Node *root, int value)
     return root;
 }
 
+// Traversal
 void inorderRec(Node *root)
 {
     if (!root)
@@ -237,7 +240,34 @@ void postorderRec(Node *root)
     postorderRec(root->right);
     cout << root->data << " ";
 }
-
+void postorderIterative(Node *root)
+{
+    if (!root)
+    {
+        cout << "Empty tree." << endl;
+        return;
+    }
+    stack<Node *> s;
+    while (root || s.size())
+    {
+        while (root)
+        {
+            s.push(root);
+            s.push(root);
+            root = root->left;
+        }
+        root = s.top();
+        s.pop();
+        if (s.size() && s.top() == root)
+            root = root->right;
+        else
+        {
+            cout << root->data << " ";
+            root = NULL;
+        }
+    }
+    cout << endl;
+}
 int main()
 {
     Node *root = NULL;
@@ -246,7 +276,7 @@ int main()
     root = insertRec(root, 20);
     root = insertRec(root, 2);
     root = insertRec(root, 0);
-    preorderIterative(root);
-    preorderRec(root);
+    postorderIterative(root);
+    postorderRec(root);
     return 0;
 }
