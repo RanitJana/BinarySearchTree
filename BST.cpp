@@ -268,6 +268,24 @@ void postorderIterative(Node *root)
     }
     cout << endl;
 }
+void levelOrderTraversal(Node *root)
+{
+    if (!root)
+        return;
+    queue<Node *> q;
+    q.push(root);
+    while (q.size())
+    {
+        Node *temp = q.front();
+        q.pop();
+        cout << temp->data << " ";
+        if (temp->left)
+            q.push(temp->left);
+        if (temp->right)
+            q.push(temp->right);
+    }
+    cout << endl;
+}
 int main()
 {
     Node *root = NULL;
